@@ -1,0 +1,67 @@
+{
+  "name": "objection-timestamp",
+  "version": "0.0.0",
+  "description": "Automatic timestamp for Objection.js",
+  "keywords": [
+    "objection",
+    "timestamp"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Seegno",
+    "email": "projects@seegno.com",
+    "url": "https://seegno.com"
+  },
+  "scripts": {
+    "changelog": "github_changelog_generator --no-issues --header-label='# Changelog' --future-release=v$npm_config_future_release && sed -i '' -e :a -e '$d;N;2,4ba' -e 'P;D' CHANGELOG.md",
+    "cover": "jest --coverage --forceExit",
+    "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls",
+    "lint": "eslint index.js test",
+    "lint-staged": "lint-staged",
+    "test": "jest --forceExit",
+    "test-watch": "jest --watch --onlyChanged",
+    "version": "npm run changelog --future-release=$npm_package_version && git add -A CHANGELOG.md"
+  },
+  "pre-commit": [
+    "lint-staged"
+  ],
+  "devDependencies": {
+    "coveralls": "^2.13.1",
+    "eslint": "^3.19.0",
+    "eslint-config-seegno": "^9.0.0",
+    "eslint-plugin-jest": "^19.0.1",
+    "jest": "^20.0.3",
+    "knex": "^0.13.0",
+    "lint-staged": "^3.4.1",
+    "objection": "^0.7.12",
+    "pre-commit": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=4.2.0"
+  },
+  "jest": {
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "html",
+      "lcov",
+      "text"
+    ],
+    "coveragePathIgnorePatterns": [
+      "./test/fixtures"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "(test/.*\\.test.js)$"
+  },
+  "lint-staged": {
+    "index.js": [
+      "eslint",
+      "git add",
+      "jest --findRelatedTests --forceExit"
+    ],
+    "test/**/*.js": [
+      "eslint",
+      "git add",
+      "jest --findRelatedTests --forceExit"
+    ]
+  }
+}
